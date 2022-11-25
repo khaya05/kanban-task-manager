@@ -1,0 +1,83 @@
+nav {
+  height: 64px;
+  padding: 15px 16px;
+  background: var(--dark-gray);
+}
+
+.desktop-logo {
+  display: none;
+}
+
+@media (min-width: 48em) {
+  nav {
+    height: 80px;
+    padding: 0;
+    padding-inline: 24px;
+    border-bottom: 1px solid var(--lines-dark);
+  }
+}
+
+@media (min-width: 90em) {
+  nav {
+    height: 90px;
+  }
+}
+
+.nav-container {
+  height: 100%;
+}
+
+.nav-container,
+.nav__board-name-container,
+.nav__add-or-delete-task-btn-container,
+.nav-container__left {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-container {
+  width: 24px;
+  margin-right: 1rem;
+}
+.nav__board-name-container h1 {
+  margin-right: 8px;
+}
+
+.nav__mobile-add-task-btn-container {
+  background: var(--main-purple);
+  margin-right: 1rem;
+  border-radius: 24px;
+  padding: 10px 18px;
+}
+
+.nav__add-btn-container {
+  display: none;
+}
+
+@media (min-width: 48em) {
+  .nav-container__left,
+  .logo-container {
+    height: 100%;
+  }
+  .logo-container {
+    width: 178px;
+    display: grid;
+    /* place-items: center; */
+    border-right: 1px solid var(--lines-dark);
+  }
+
+  nav h1 {
+    font-size: 20px;
+  }
+
+  .mobile-show-boards-container,
+  .nav__mobile-add-task-btn-container {
+    display: none;
+  }
+
+  .nav__add-btn-container {
+    display: block;
+    margin-right: 24px;
+  }
+}
