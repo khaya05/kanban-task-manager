@@ -56,14 +56,18 @@ nav {
 }
 
 @media (min-width: 48em) {
-  .nav-container__left,
-  .logo-container {
+  .nav-container__left {
+    width: 50%;
     height: 100%;
+    justify-content: start;
   }
+
   .logo-container {
-    width: 178px;
-    display: grid;
-    /* place-items: center; */
+    width: 201px;
+    height: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
     border-right: 1px solid var(--lines-dark);
   }
 
@@ -76,8 +80,21 @@ nav {
     display: none;
   }
 
+  .mobile-show-boards-container{
+    transform: rotate(90deg);
+    transition: all 350ms;
+  }
+
+  .mobile-show-boards-container.translate-icon{
+    transform: rotate(180deg);
+  }
+
   .nav__add-btn-container {
     display: block;
     margin-right: 24px;
   }
+}
+
+.nav__board-details-btn-container {
+  cursor: pointer;
 }

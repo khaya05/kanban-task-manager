@@ -1,0 +1,7 @@
+.theme-toggle-btn {
+  width: 235px;
+  height: 48px;
+  border-radius: 6px;
+  background-color: var(--very-dark-gray);
+  border: 1px solid var(--lines-dark);
+}

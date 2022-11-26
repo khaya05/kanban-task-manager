@@ -1,0 +1,12 @@
+@media (min-width:48em) {
+  #main{
+  display: flex;
+}
+
+.home__main-container{
+  width: 100%;
+  margin-inline-start:260px
+}
+
+  
+}
