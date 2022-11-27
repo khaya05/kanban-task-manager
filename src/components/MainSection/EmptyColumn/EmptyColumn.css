@@ -1,0 +1,23 @@
+.empty-columns {
+  max-width: 343px;
+}
+
+.empty-columns p {
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 18px;
+}
+
+.empty-columns button {
+  margin-inline: 84px;
+}
+
+@media (min-width: 90em) {
+  .empty-columns {
+    max-width: 493px;
+  }
+  .empty-columns button {
+    margin-inline: 159px;
+  }
+}

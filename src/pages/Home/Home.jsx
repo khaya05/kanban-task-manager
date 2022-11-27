@@ -1,4 +1,4 @@
-import { Aside, Navbar, Overlay, ShowSidebar } from '../../components';
+import { Aside, Columns, Navbar, Overlay, ShowSidebar } from '../../components';
 import { useGlobalContext } from '../../Context/context';
 
 import './Home.css';
@@ -18,6 +18,7 @@ function Home() {
         className={`home__main-container ${showAside ? 'translate-home' : ''}`}
       >
         <Navbar />
+        <Columns />
       </div>
       <div
         className={`home__show-sidebar-container ${

@@ -6,3 +6,7 @@ export { default as Wrapper } from './Shared/Wrapper/Wrapper';
 export { default as Logo } from './Shared/Logo/Logo';
 export { default as ThemeToggle } from './Shared/ThemeToggle/ThemeToggle';
 export { default as ShowSidebar } from './Aside/ShowSidebar';
+export { default as Columns } from './MainSection/Columns/Columns';
+export { default as EmptyColumn } from './MainSection/EmptyColumn/EmptyColumn';
+export { default as BoardColumns } from './MainSection/BoardColumns/BoardColumns'
+export {default as Task} from './MainSection/Task/Task'

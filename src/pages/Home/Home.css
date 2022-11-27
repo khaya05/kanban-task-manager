@@ -1,6 +1,9 @@
 .home__main-container {
   width: 100%;
   transition: all 350ms;
+  /* display; */
+  /* border: 1px solid white; */
+  height: 100vh;
 }
 
 .home__show-sidebar-container {

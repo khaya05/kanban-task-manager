@@ -1,0 +1,13 @@
+#board-columns {
+  display: grid;
+  place-items: center;
+  /* border: 1px solid red; */
+  height: calc(100% - 64px);
+  padding: 24px 0 0 1rem;
+}
+
+@media (min-width: 48em) {
+  #board-columns {
+    height: calc(100% - 80px);
+  }
+}
