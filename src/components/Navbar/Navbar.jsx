@@ -6,7 +6,8 @@ import { useGlobalContext } from '../../Context/context';
 
 function Navbar() {
   const [theme, setTheme] = useState('dark-mode');
-  const { showAside, setShowAside, setShowOverlay } = useGlobalContext();
+  const { showAside, setShowAside, setShowOverlay, currentBoard } =
+    useGlobalContext();
 
   const handleMobileShowBoards = () => {
     setShowOverlay(true);
@@ -18,12 +19,18 @@ function Navbar() {
       <div className="nav-container">
         <div className="nav-container__left">
           {/* mobile logo */}
-          <figure className="logo-container">
+          <figure className="mobile-logo-container">
             <Logo />
           </figure>
 
+          {!showAside && (
+            <figure className="logo-container">
+              <Logo />
+            </figure>
+          )}
+
           <div className={`nav__board-name-container`}>
-            <h1>Platform Launch</h1>
+            <h1>{currentBoard.name}</h1>
 
             <div
               className={`mobile-show-boards-container ${

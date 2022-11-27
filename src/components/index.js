@@ -5,3 +5,4 @@ export { default as Aside } from './Aside/Aside';
 export { default as Wrapper } from './Shared/Wrapper/Wrapper';
 export { default as Logo } from './Shared/Logo/Logo';
 export { default as ThemeToggle } from './Shared/ThemeToggle/ThemeToggle';
+export { default as ShowSidebar } from './Aside/ShowSidebar';

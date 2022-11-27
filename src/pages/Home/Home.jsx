@@ -1,11 +1,11 @@
-import { Aside, Navbar, Overlay } from '../../components';
+import { Aside, Navbar, Overlay, ShowSidebar } from '../../components';
 import { useGlobalContext } from '../../Context/context';
 
-import './Home.css'
+import './Home.css';
 
 function Home() {
   const { showOverlay, setShowOverlay, showAside } = useGlobalContext();
-  console.log(showOverlay);
+
   return (
     <main id="main">
       {showOverlay && <Overlay />}
@@ -14,8 +14,17 @@ function Home() {
           <Aside />
         </div>
       )}
-      <div className={`home__main-container `}>
+      <div
+        className={`home__main-container ${showAside ? 'translate-home' : ''}`}
+      >
         <Navbar />
+      </div>
+      <div
+        className={`home__show-sidebar-container ${
+          showAside && 'hide-container'
+        }`}
+      >
+        <ShowSidebar />
       </div>
     </main>
   );

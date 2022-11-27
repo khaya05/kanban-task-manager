@@ -1,12 +1,30 @@
-@media (min-width:48em) {
-  #main{
-  display: flex;
-}
-
-.home__main-container{
+.home__main-container {
   width: 100%;
-  margin-inline-start:260px
+  transition: all 350ms;
 }
 
-  
+.home__show-sidebar-container {
+  display: none;
+}
+
+@media (min-width: 48em) {
+  #main {
+    display: flex;
+  }
+
+  .translate-home {
+    margin-left: 260px;
+  }
+
+  .home__show-sidebar-container {
+    display: inline-block;
+    position: absolute;
+    bottom: 50px;
+    width: 56px;
+    height: 48px;
+  }
+
+  .hide-container {
+    display: none;
+  }
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useGlobalContext } from '../../Context/context';
 import { ReactComponent as BoardIcon } from '../../assets/icon-board.svg';
 import { ReactComponent as HideSidebar } from '../../assets/icon-hide-sidebar.svg';
@@ -8,7 +8,15 @@ import { ThemeToggle } from '../';
 import './Aside.css';
 
 function Aside() {
-  const { allBoards, setShowOverlay, setShowAside } = useGlobalContext();
+  const {
+    allBoards,
+    setShowOverlay,
+    setShowAside,
+    setIndex,
+    currentBoard,
+    setCurrentBoard,
+    index,
+  } = useGlobalContext();
   const boardsLength = allBoards.length;
 
   const handleOnBlur = (e) => {
@@ -17,8 +25,27 @@ function Aside() {
     setShowOverlay(false);
   };
 
+  const handleHideSidebar = () => {
+    setShowAside(false);
+  };
+
+  useEffect(() => {
+    setCurrentBoard(allBoards[index]);
+  }, [index]);
+
+  const getCurrentBoard = (id) => {
+    const localIndex = allBoards.indexOf(
+      allBoards.find((board) => board.id === id)
+    );
+    setIndex(localIndex)
+
+    
+
+    console.log('index', index, 'localIndex', localIndex);
+  };
+
   return (
-    <aside onBlur={(e) => handleOnBlur(e)}>
+    <aside>
       <div className="aside__top">
         <div className="aside__logo-container">
           <Logo />
@@ -28,7 +55,7 @@ function Aside() {
 
         <ul className="aside__boards-list">
           {allBoards.map(({ id, name }) => (
-            <li key={id}>
+            <li key={id} onClick={() => getCurrentBoard(id)}>
               <span className="board-icon-container">
                 <BoardIcon />
               </span>
@@ -53,12 +80,16 @@ function Aside() {
           <ThemeToggle />
         </div>
 
-        <div className="hide-sidebar-container">
+        <button
+          className="hide-sidebar-btn"
+          type="button"
+          onClick={handleHideSidebar}
+        >
           <div className="close-icon-container">
             <HideSidebar />
           </div>
           <p>Hide Sidebar</p>
-        </div>
+        </button>
       </div>
     </aside>
   );

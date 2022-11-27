@@ -39,6 +39,7 @@ nav {
 .logo-container {
   width: 24px;
   margin-right: 1rem;
+  display: none;
 }
 .nav__board-name-container h1 {
   margin-right: 8px;
@@ -55,11 +56,19 @@ nav {
   display: none;
 }
 
+.mobile-logo-container{
+  margin-right: 1rem;
+}
+
 @media (min-width: 48em) {
   .nav-container__left {
     width: 50%;
     height: 100%;
     justify-content: start;
+  }
+
+  .mobile-logo-container{
+    display:  none;
   }
 
   .logo-container {
@@ -69,6 +78,7 @@ nav {
     justify-content: start;
     align-items: center;
     border-right: 1px solid var(--lines-dark);
+    padding-right: 24px;
   }
 
   nav h1 {

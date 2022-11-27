@@ -11,7 +11,7 @@ aside {
   padding-block: 1rem;
 }
 .aside__logo-container,
-.hide-sidebar-container {
+.hide-sidebar-btn {
   display: none;
 }
 
@@ -87,12 +87,19 @@ aside ul li:hover .board-icon-container path {
     border-radius: 0;
     box-shadow: none;
     display: flex;
-    justify-content: space-between;
     flex-direction: column;
+    justify-content: space-between;
     border-right: 1px solid var(--lines-dark);
   }
 
-  .hide-sidebar-container {
+  .aside__logo-container {
+    display: block;
+    margin: 20px 0 54px 32px;
+  }
+
+  .hide-sidebar-btn {
+    border: 0;
+    background: inherit;
     margin: 1rem 0 2rem 0;
     padding: 0 0 0 12px;
     height: 48px;
@@ -101,21 +108,21 @@ aside ul li:hover .board-icon-container path {
     align-items: center;
     cursor: pointer;
     border-radius: 0 24px 24px 0;
-    /* transform: translateX(260px); */
   }
 
   .close-icon-container + p {
     font-weight: 700;
   }
 
-  .hide-sidebar-container:hover {
+  .hide-sidebar-btn:hover,
+  .hide-sidebar-btn:focus-within {
     background: white;
   }
-  .hide-sidebar-container:hover .close-icon-container + p {
+  .hide-sidebar-btn:hover .close-icon-container + p {
     color: var(--main-purple);
   }
 
-  .hide-sidebar-container:hover .close-icon-container path {
+  .hide-sidebar-btn:hover .close-icon-container path {
     fill: var(--main-purple);
   }
 
