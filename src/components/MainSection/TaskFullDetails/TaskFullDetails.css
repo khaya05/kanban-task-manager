@@ -1,0 +1,9 @@
+.task-full-details{
+  position: absolute;
+  margin-inline: 1rem;
+  top: 207px;
+  width: 480px;
+  height: 100%;
+  border: 1px solid white;
+  left: 0;
+}

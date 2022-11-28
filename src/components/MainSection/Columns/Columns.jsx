@@ -5,7 +5,6 @@ import './Columns.css';
 function Columns() {
   const { currentBoard } = useGlobalContext();
   const currentBoardColumns = currentBoard.columns;
-  console.log(currentBoardColumns);
 
   return (
     <main id="board-columns">

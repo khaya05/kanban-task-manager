@@ -1,14 +1,23 @@
-import { Aside, Columns, Navbar, Overlay, ShowSidebar } from '../../components';
+import {
+  Aside,
+  Columns,
+  Navbar,
+  Overlay,
+  ShowSidebar,
+  TaskFullDetails,
+} from '../../components';
 import { useGlobalContext } from '../../Context/context';
 
 import './Home.css';
 
 function Home() {
-  const { showOverlay, setShowOverlay, showAside } = useGlobalContext();
+  const { showOverlay, setShowOverlay, showAside, showTaskFullDetails } =
+    useGlobalContext();
 
   return (
     <main id="main">
       {showOverlay && <Overlay />}
+      {showTaskFullDetails && <TaskFullDetails />}
       {showAside && (
         <div className="home__aside-container">
           <Aside />

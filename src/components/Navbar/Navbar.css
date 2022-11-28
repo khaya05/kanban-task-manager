@@ -2,6 +2,9 @@ nav {
   height: 64px;
   padding: 15px 16px;
   background: var(--dark-gray);
+  position:fixed ;
+  width: 100%;
+  /* margin-bottom: 80px; */
 }
 
 .desktop-logo {
@@ -10,6 +13,7 @@ nav {
 
 @media (min-width: 48em) {
   nav {
+    position: static;
     height: 80px;
     padding: 0;
     padding-inline: 24px;
