@@ -90,6 +90,7 @@ aside ul li:hover .board-icon-container path {
     flex-direction: column;
     justify-content: space-between;
     border-right: 1px solid var(--lines-dark);
+    z-index: 1;
   }
 
   .aside__logo-container {

@@ -11,13 +11,14 @@ import { useGlobalContext } from '../../Context/context';
 import './Home.css';
 
 function Home() {
-  const { showOverlay, setShowOverlay, showAside, showTaskFullDetails } =
+  const { showOverlay, setShowOverlay, showAside, showTaskDetails } =
     useGlobalContext();
 
   return (
     <main id="main">
       {showOverlay && <Overlay />}
-      {showTaskFullDetails && <TaskFullDetails />}
+      {showTaskDetails && <TaskFullDetails />}
+
       {showAside && (
         <div className="home__aside-container">
           <Aside />

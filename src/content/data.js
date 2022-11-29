@@ -405,7 +405,7 @@ export const boards = [
           },
           {
             title: 'Share on Show HN',
-            description: '',
+            description: 'Todo',
             status: '',
             id: nanoid(),
             subtasks: [
@@ -429,7 +429,7 @@ export const boards = [
           {
             title: 'Write launch article to publish on multiple channels',
             description: '',
-            status: '',
+            status: 'Todo',
             id: nanoid(),
             subtasks: [
               {
@@ -479,7 +479,7 @@ export const boards = [
           {
             title: 'Launch version one',
             description: '',
-            status: '',
+            status: 'Now',
             id: nanoid(),
             subtasks: [
               {
@@ -498,7 +498,7 @@ export const boards = [
             title: 'Review early feedback and plan next steps for roadmap',
             description:
               "Beyond the initial launch, we're keeping the initial roadmap completely empty. This meeting will help us plan out our next steps based on actual customer feedback.",
-            status: '',
+            status: 'Now',
             id: nanoid(),
             subtasks: [
               {

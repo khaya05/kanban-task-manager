@@ -1,8 +1,19 @@
 import ReactDOM from 'react-dom';
-import './Overlay.css'
+import { useGlobalContext } from '../../Context/context';
+import './Overlay.css';
 
 function Overlay() {
-  return <div className="overlay"></div>;
+  const { setShowOverlay, setShowTaskDetails } = useGlobalContext();
+  const handleClick = () => {
+    setShowOverlay(false);
+    setShowTaskDetails(false);
+  };
+
+  return (
+    <div className="overlay">
+      <button onClick={handleClick}>close </button>
+    </div>
+  );
 }
 
 {

@@ -37,11 +37,7 @@ function Aside() {
     const localIndex = allBoards.indexOf(
       allBoards.find((board) => board.id === id)
     );
-    setIndex(localIndex)
-
-    
-
-    console.log('index', index, 'localIndex', localIndex);
+    setIndex(localIndex);
   };
 
   return (

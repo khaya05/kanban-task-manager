@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Wrapper } from '../../';
 import { useGlobalContext } from '../../../Context/context';
 import './Task.css';
@@ -7,11 +8,15 @@ function Task({ name, subtasks, id, columnId }) {
     currentBoard,
     setCurrentTask,
     currentTask,
+    showTaskDetails,
+    showOverlay,
     setShowTaskDetails,
     setShowOverlay,
   } = useGlobalContext();
 
   const completed = subtasks.filter((task) => task.isCompleted === true);
+
+  useEffect(() => { });
 
   const handleClick = (id) => {
     const task = currentBoard.columns

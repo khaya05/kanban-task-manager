@@ -1,15 +1,60 @@
 import { Wrapper } from '../../';
 import { useGlobalContext } from '../../../Context/context';
 import { ReactComponent as Ellipses } from '../../../assets/icon-vertical-ellipsis.svg';
+import { ReactComponent as ArrowUp } from '../../../assets/icon-chevron-up.svg';
 
 import './TaskFullDetails.css';
+import { boards } from '../../../content/data';
 
 function TaskFullDetails() {
-  const {
-    currentTask: { subtasks, title, description, status },
-  } = useGlobalContext();
+  const { currentTask, setAllBoards, currentBoard, allBoards } =
+    useGlobalContext();
+  const { subtasks, title, id, description } = currentTask;
 
-  const complete = subtasks?.filter((task) => task.isComplete === true);
+  const complete = subtasks?.filter((task) => task.isCompleted === true);
+
+  // current board, currentTask, subtask
+
+  // boards[{id, name, columns[{id, name, tasks[{}]}]}]
+
+  // boards[] > columns[{id,name,tasks}] > tasks > subtasks
+
+  const handleChange = (e, subtaskId) => {
+    setAllBoards((oldBoards) => {
+      return oldBoards.map((board) => {
+        return board === currentBoard
+          ? {
+              ...board,
+              columns: board.columns.map((column) => {
+                return column.name === currentTask.status
+                  ? {
+                      ...column,
+                      tasks: column.tasks.map((task) => {
+                        return task === currentTask
+                          ? {
+                              ...task,
+                              subtasks: task.subtasks.map((subtask) => {
+                                return subtask.id === subtaskId
+                                  ? {
+                                      ...subtask,
+                                      isCompleted: e.target.checked,
+                                    }
+                                  : subtask;
+                              }),
+                            }
+                          : task;
+                      }),
+                    }
+                  : column;
+              }),
+            }
+          : board;
+      });
+    });
+  };
+
+  console.log(currentBoard.name);
+  console.log(currentTask.status);
 
   return (
     <article className="task-full-details">
@@ -24,19 +69,42 @@ function TaskFullDetails() {
         <p>{description}</p>
 
         <h4>
-          Subtasks ({complete.length || 0} of {subtasks.length})
+          Subtasks ({complete?.length || 0} of {subtasks?.length || 0})
         </h4>
+
         <ul>
-          {subtasks?.map(({ id, isCompleted, title }) => (
-            <li key={id}>
-              <input type="checkbox" checked={isCompleted} />
+          {subtasks?.map(({ id: subtaskId, isCompleted, title }) => (
+            <li key={subtaskId}>
+              <input
+                type="checkbox"
+                checked={isCompleted}
+                onChange={(e) => {
+                  handleChange(e, subtaskId);
+                }}
+              />
               <p>{title}</p>
             </li>
           ))}
         </ul>
 
         <h4>Current Status</h4>
-        
+        <div className="dropdown-container">
+          <div className="">
+            <p>{currentTask.status}</p>
+
+            <div className="arrow-up-container">
+              <ArrowUp />
+            </div>
+          </div>
+
+          <ul className="dropdown">
+            {currentBoard.columns.map((column) => {
+              <li>
+                <p>{column.name}</p>
+              </li>;
+            })}
+          </ul>
+        </div>
       </Wrapper>
     </article>
   );
