@@ -14,6 +14,7 @@ export const AppProvider = ({ children }) => {
   const [preferrersDarkMode, setPreferrersDarkMode] = useState(false);
   const [showAside, setShowAside] = useState(!false);
   const [showTaskDetails, setShowTaskDetails] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   // useEffect(() => {
   //   setCurre
@@ -38,6 +39,8 @@ export const AppProvider = ({ children }) => {
         setPreferrersDarkMode,
         showTaskDetails,
         setShowTaskDetails,
+        showDropdown,
+        setShowDropdown,
       }}
     >
       {children}

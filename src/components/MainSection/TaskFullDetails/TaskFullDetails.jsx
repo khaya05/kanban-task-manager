@@ -7,8 +7,14 @@ import './TaskFullDetails.css';
 import { boards } from '../../../content/data';
 
 function TaskFullDetails() {
-  const { currentTask, setAllBoards, currentBoard, allBoards } =
-    useGlobalContext();
+  const {
+    currentTask,
+    setAllBoards,
+    currentBoard,
+    allBoards,
+    showDropdown,
+    setShowDropdown,
+  } = useGlobalContext();
   const { subtasks, title, id, description } = currentTask;
 
   const complete = subtasks?.filter((task) => task.isCompleted === true);
@@ -53,8 +59,7 @@ function TaskFullDetails() {
     });
   };
 
-  console.log(currentBoard.name);
-  console.log(currentTask.status);
+  // console.log(currentTask.status);
 
   return (
     <article className="task-full-details">
@@ -89,7 +94,11 @@ function TaskFullDetails() {
 
         <h4>Current Status</h4>
         <div className="dropdown-container">
-          <div className="">
+          <div
+            className="current-status-container"
+            onClick={() => setShowDropdown((oldState) => !oldState)}
+            // onBlur={setShowDropdown(false)}
+          >
             <p>{currentTask.status}</p>
 
             <div className="arrow-up-container">
@@ -97,13 +106,13 @@ function TaskFullDetails() {
             </div>
           </div>
 
-          <ul className="dropdown">
-            {currentBoard.columns.map((column) => {
-              <li>
-                <p>{column.name}</p>
-              </li>;
-            })}
-          </ul>
+          {showDropdown && (
+            <div className="dropdown">
+              {currentBoard.columns.map(({ name, id }) => {
+                return <p key={id} onClick={()=>handleDropdownClick(e)}>{name}</p>;
+              })}
+            </div>
+          )}
         </div>
       </Wrapper>
     </article>

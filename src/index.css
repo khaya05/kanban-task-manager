@@ -73,6 +73,7 @@ svg {
   --medium-gray: hsla(216, 15%, 57%, 1);
 
   --main-purple: hsla(242, 48%, 58%, 1);
+  --main-purple-025: hsla(242, 48%, 58%, 0.25);
   --main-purple-hover: hsla(242, 100%, 82%, 1);
   --lines-light: hsla(221, 69%, 94%, 1);
 
