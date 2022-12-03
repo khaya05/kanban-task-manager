@@ -19,11 +19,6 @@ function TaskFullDetails() {
 
   const complete = subtasks?.filter((task) => task.isCompleted === true);
 
-  // current board, currentTask, subtask
-
-  // boards[{id, name, columns[{id, name, tasks[{}]}]}]
-
-  // boards[] > columns[{id,name,tasks}] > tasks > subtasks
 
   const handleChange = (e, subtaskId) => {
     setAllBoards((oldBoards) => {

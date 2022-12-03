@@ -1,18 +1,20 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { ReactComponent as ShowAsideIcon } from '../../assets/icon-show-sidebar.svg';
-import { useGlobalContext } from '../../Context/context';
+import { uiActions } from '../../store/ui-slice';
 
 import './ShowSidebar.css';
 
 function ShowSidebar() {
-  const { showAside, setShowAside } = useGlobalContext();
+  const dispatch = useDispatch();
+  const isSidebarVisible = useSelector((state) => state.ui.isSidebarVisible);
 
   const handleClick = () => {
-    setShowAside(true);
+    dispatch(uiActions.showSidebar())
   };
 
   return (
     <div
-      className={`desktop-show-aside ${showAside && 'hide-sidebar-btn-toggle'}`}
+      className={`desktop-show-aside ${isSidebarVisible && 'hide-sidebar-btn-toggle'}`}
       onClick={handleClick}
     >
       <ShowAsideIcon />

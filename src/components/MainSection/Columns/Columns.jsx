@@ -1,9 +1,9 @@
+import { useSelector } from 'react-redux';
 import { EmptyColumn, BoardColumns } from '../../';
-import { useGlobalContext } from '../../../Context/context';
 import './Columns.css';
 
 function Columns() {
-  const { currentBoard } = useGlobalContext();
+  const currentBoard = useSelector(state => state.boards.currentBoard)
   const currentBoardColumns = currentBoard.columns;
 
   return (

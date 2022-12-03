@@ -1,17 +1,18 @@
-import { useState } from 'react';
 import { chevronDown, ellipsis, plusIcon } from '../../assets';
 import { AddButton, Logo } from '../';
+import { useDispatch, useSelector } from 'react-redux';
+import { uiActions } from '../../store/ui-slice';
 import './Navbar.css';
-import { useGlobalContext } from '../../Context/context';
 
 function Navbar() {
-  const [theme, setTheme] = useState('dark-mode');
-  const { showAside, setShowAside, setShowOverlay, currentBoard } =
-    useGlobalContext();
+  const dispatch = useDispatch();
+  const currentBoard = useSelector((state) => state.boards.currentBoard);
+  const isSidebarVisible = useSelector((state) => state.ui.isSidebarVisible);
+
 
   const handleMobileShowBoards = () => {
-    setShowOverlay(true);
-    setShowAside(true);
+    dispatch(uiActions.showSidebar());
+    dispatch(uiActions.toggleOverlay());
   };
 
   return (
@@ -23,7 +24,7 @@ function Navbar() {
             <Logo />
           </figure>
 
-          {!showAside && (
+          {!isSidebarVisible && (
             <figure className="logo-container">
               <Logo />
             </figure>
@@ -34,7 +35,7 @@ function Navbar() {
 
             <div
               className={`mobile-show-boards-container ${
-                showAside ? 'translate-icon' : ''
+                isSidebarVisible ? 'translate-icon' : ''
               }`}
               onClick={handleMobileShowBoards}
             >

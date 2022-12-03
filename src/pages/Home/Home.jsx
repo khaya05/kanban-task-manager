@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import {
   Aside,
   Columns,
@@ -6,33 +7,41 @@ import {
   ShowSidebar,
   TaskFullDetails,
 } from '../../components';
-import { useGlobalContext } from '../../Context/context';
+// import { useGlobalContext } from '../../Context/context';
 
 import './Home.css';
 
 function Home() {
-  const { showOverlay, setShowOverlay, showAside, showTaskDetails } =
-    useGlobalContext();
+  // const { showOverlay, setShowOverlay, showAside, showTaskDetails } =
+    // useGlobalContext();
+
+  const isSidebarVisible = useSelector((state) => state.ui.isSidebarVisible);
+  const isOverlayVisible = useSelector((state) => state.ui.isOverlayVisible);
+  const isTaskDetailsVisible = useSelector(
+    (state) => state.ui.isTaskDetailsVisible
+  );
 
   return (
     <main id="main">
-      {showOverlay && <Overlay />}
-      {showTaskDetails && <TaskFullDetails />}
+      {isOverlayVisible && <Overlay />}
+      {isTaskDetailsVisible && <TaskFullDetails />}
 
-      {showAside && (
+      {isSidebarVisible && (
         <div className="home__aside-container">
           <Aside />
         </div>
       )}
       <div
-        className={`home__main-container ${showAside ? 'translate-home' : ''}`}
+        className={`home__main-container ${
+          isSidebarVisible ? 'translate-home' : ''
+        }`}
       >
         <Navbar />
         <Columns />
       </div>
       <div
         className={`home__show-sidebar-container ${
-          showAside && 'hide-container'
+          isSidebarVisible && 'hide-container'
         }`}
       >
         <ShowSidebar />

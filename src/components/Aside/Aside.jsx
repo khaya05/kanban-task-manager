@@ -1,43 +1,33 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useGlobalContext } from '../../Context/context';
 import { ReactComponent as BoardIcon } from '../../assets/icon-board.svg';
 import { ReactComponent as HideSidebar } from '../../assets/icon-hide-sidebar.svg';
 import Logo from '../Shared/Logo/Logo';
 import { ThemeToggle } from '../';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { uiActions } from '../../store/ui-slice';
 import './Aside.css';
+import { boardActions } from '../../store/boards-slice';
 
 function Aside() {
-  const {
-    allBoards,
-    setShowOverlay,
-    setShowAside,
-    setIndex,
-    currentBoard,
-    setCurrentBoard,
-    index,
-  } = useGlobalContext();
-  const boardsLength = allBoards.length;
+  const dispatch = useDispatch();
+  const { setCurrentBoard, index } = useGlobalContext();
+  const boards = useSelector((state) => state.boards.boards);
+  const boardsLength = boards.length;
 
-  const handleOnBlur = (e) => {
-    console.log(e.target);
-    setShowAside(false);
-    setShowOverlay(false);
-  };
+  const handleOnBlur = (e) => {};
 
   const handleHideSidebar = () => {
-    setShowAside(false);
+    dispatch(uiActions.hideSidebar());
   };
 
   useEffect(() => {
-    setCurrentBoard(allBoards[index]);
+    setCurrentBoard(boards[index]);
   }, [index]);
 
   const getCurrentBoard = (id) => {
-    const localIndex = allBoards.indexOf(
-      allBoards.find((board) => board.id === id)
-    );
-    setIndex(localIndex);
+    dispatch(boardActions.getCurrentBoard(id));
   };
 
   return (
@@ -50,7 +40,7 @@ function Aside() {
         <p className="boards-count">ALL BOARDS ({boardsLength})</p>
 
         <ul className="aside__boards-list">
-          {allBoards.map(({ id, name }) => (
+          {boards.map(({ id, name }) => (
             <li key={id} onClick={() => getCurrentBoard(id)}>
               <span className="board-icon-container">
                 <BoardIcon />
