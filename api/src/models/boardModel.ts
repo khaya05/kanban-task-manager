@@ -1,22 +1,22 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
-interface IBoard extends Document {
+export interface IBoard extends Document {
   name: string;
-  owner: mongoose.Types.ObjectId;
+  userId: mongoose.Types.ObjectId;
 }
 
-const columnSchema: Schema = new Schema({
+const boardSchema: Schema = new Schema({
   name: {
     type: String,
     required: [true, 'A board must have a name'],
     unique: true,
-    default: 'untitled-column',
+    default: 'untitled-board',
   },
-  owner: {
+  userId: {
     type: Schema.Types.ObjectId,
-    required: [true, 'A column must belong to a user'],
+    required: [true, 'A board must belong to a user'],
     ref: 'User',
   },
 });
 
-export default mongoose.model<IBoard>('Board', columnSchema);
+export default mongoose.model<IBoard>('Board', boardSchema);
