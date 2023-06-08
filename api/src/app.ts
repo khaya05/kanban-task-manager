@@ -8,6 +8,7 @@ import morgan from 'morgan';
 // Routes
 import userRouter from './routes/userRouter';
 import boardRouter from './routes/boardRouter';
+import notFound from 'middleware/not-found';
 
 const app = express();
 
@@ -17,9 +18,9 @@ app.use(compression());
 app.use(cookieParser());
 app.use(bodyParser.json());
 
-
 // Routes
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/boards', boardRouter);
+app.use(notFound);
 
 export default app;
