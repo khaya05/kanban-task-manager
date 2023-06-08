@@ -8,7 +8,7 @@ import morgan from 'morgan';
 // Routes
 import userRouter from './routes/userRouter';
 import boardRouter from './routes/boardRouter';
-import notFound from 'middleware/not-found';
+import notFound from './middleware/not-found';
 
 const app = express();
 

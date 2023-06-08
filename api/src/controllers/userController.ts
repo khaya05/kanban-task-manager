@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import User, { IUser } from '../models/userModel';
-import { asyncWrapper } from '../utils/asyncWrapper';
+import { asyncWrapper } from '../middleware/asyncWrapper';
 import AppError from '../utils/appError';
 
 export const getAllUsers = async (
@@ -47,31 +47,19 @@ export const getUser = async (
   }
 };
 
-export const createUser = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
+export const createUser = asyncWrapper(
+  async (req: Request, res: Response, next: NextFunction) => {
     const { password, confirmPassword } = req.body;
-
     if (password !== confirmPassword) {
       return res
         .status(400)
         .json({ status: 'fail', message: 'Passwords do not match!' });
     }
-
     const user: IUser = await User.create(req.body);
 
     res.status(201).json({ status: 'success', user });
-  } catch (err) {
-    res.status(500).json({
-      status: 'fail',
-      message: 'Failed to create document',
-      error: err.message,
-    });
   }
-};
+);
 
 export const updateUser = async (
   req: Request,

@@ -1,4 +1,4 @@
-class AppError extends Error {
+class CustomError extends Error {
   statusCode: number;
 
   constructor(statusCode: number, message: string) {
@@ -9,4 +9,11 @@ class AppError extends Error {
   }
 }
 
-export default AppError;
+export const createCustomError = (
+  statusCode: number,
+  msg: string
+): CustomError => {
+  return new CustomError(statusCode, msg);
+};
+
+export default CustomError;
