@@ -3,22 +3,126 @@ import User, { IUser } from '../models/userModel';
 import { asyncWrapper } from '../utils/asyncWrapper';
 import AppError from '../utils/appError';
 
-export const createUser = asyncWrapper(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const { password, confirmPassword } = req.body;
+export const getAllUsers = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const users: IUser[] = await User.find();
 
-    // Check if the password and confirmPassword match
-    if (password !== confirmPassword) {
-      return next(new AppError(400, 'Passwords do not match!'));
+    res.status(200).json({ status: 'success', users });
+  } catch (err) {
+    res.status(500).json({
+      status: 'fail',
+      message: 'Failed to get document',
+      error: err.message,
+    });
+  }
+};
+
+export const getUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const id: string = req.params.userId;
+    const user: IUser | null = await User.findById(id);
+
+    // check if user exists
+    if (!user) {
+      return res
+        .status(404)
+        .json({ status: 'fail', message: 'User not found' });
     }
 
-    // Create a new user object
-    const newUser: IUser = new User(req.body);
-
-    // Save the user to the database
-    const savedUser = await newUser.save();
-
-    // Return the saved user object as the response
-    res.status(201).json(savedUser);
+    res.status(200).json({ status: 'success', user });
+  } catch (err) {
+    res.status(500).json({
+      status: 'fail',
+      message: 'Failed to get document',
+      error: err.message,
+    });
   }
-);
+};
+
+export const createUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { password, confirmPassword } = req.body;
+
+    if (password !== confirmPassword) {
+      return res
+        .status(400)
+        .json({ status: 'fail', message: 'Passwords do not match!' });
+    }
+
+    const user: IUser = await User.create(req.body);
+
+    res.status(201).json({ status: 'success', user });
+  } catch (err) {
+    res.status(500).json({
+      status: 'fail',
+      message: 'Failed to create document',
+      error: err.message,
+    });
+  }
+};
+
+export const updateUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const id: string = req.params.userId;
+    const user: IUser | null = await User.findByIdAndUpdate(id, req.body, {
+      runValidators: true,
+    });
+
+    // check if user exists
+    if (!user) {
+      return res
+        .status(404)
+        .json({ status: 'fail', message: 'User not found' });
+    }
+
+    res.status(200).json({ status: 'success', user });
+  } catch (err) {
+    res.status(500).json({
+      status: 'fail',
+      message: 'Failed to create document',
+      error: err.message,
+    });
+  }
+};
+
+export const deleteUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const id: string = req.params.userId;
+    const user: IUser | null = await User.findByIdAndDelete(id);
+
+    // check if user exists
+    if (!user) {
+      return res
+        .status(404)
+        .json({ status: 'fail', message: 'User not found' });
+    }
+
+    res.status(204);
+  } catch (err) {
+    res.status(500).json({
+      status: 'fail',
+      message: 'Failed to create document',
+      error: err.message,
+    });
+  }
+};
