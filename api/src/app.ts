@@ -3,9 +3,14 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import cors from 'cors';
+import morgan from 'morgan';
+
+// Routes
+import userRouter from './routes/userRouter';
 
 const app = express();
 
+app.use(morgan('dev'));
 app.use(cors({ credentials: true }));
 app.use(compression());
 app.use(cookieParser());
@@ -14,6 +19,6 @@ app.use(bodyParser.json());
 const fun = () => {};
 
 // Routes
-
+app.use('/api/v1/users', userRouter);
 
 export default app;
