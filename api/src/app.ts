@@ -7,6 +7,7 @@ import morgan from 'morgan';
 
 // Routes
 import userRouter from './routes/userRouter';
+import boardRouter from './routes/boardRouter';
 
 const app = express();
 
@@ -16,9 +17,9 @@ app.use(compression());
 app.use(cookieParser());
 app.use(bodyParser.json());
 
-const fun = () => {};
 
 // Routes
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/boards', boardRouter);
 
 export default app;

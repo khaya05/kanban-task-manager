@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import Board, { IBoard } from 'models/boardModel';
+import Board, { IBoard } from '../models/boardModel';
 
 export const getAllBoards = async (
   req: Request,

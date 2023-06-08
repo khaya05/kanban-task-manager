@@ -5,7 +5,7 @@ import AppError from '../utils/appError';
 
 export const createUser = asyncWrapper(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { name, email, password, confirmPassword, photo } = req.body;
+    const { password, confirmPassword } = req.body;
 
     // Check if the password and confirmPassword match
     if (password !== confirmPassword) {
@@ -13,13 +13,7 @@ export const createUser = asyncWrapper(
     }
 
     // Create a new user object
-    const newUser: IUser = new User({
-      name,
-      email,
-      password,
-      confirmPassword,
-      photo,
-    });
+    const newUser: IUser = new User(req.body);
 
     // Save the user to the database
     const savedUser = await newUser.save();
