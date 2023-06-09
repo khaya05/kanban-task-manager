@@ -28,7 +28,7 @@ export const getUser = asyncWrapper(
 
     // check if user exists
     if (!user) {
-      return createCustomError(404, 'User not found', 'fail');
+      return createCustomError(404, 'User not found');
     }
 
     res.status(200).json({ status: 'success', user });
@@ -39,7 +39,7 @@ export const createUser = asyncWrapper(
   async (req: Request, res: Response, next: NextFunction) => {
     const { password, confirmPassword } = req.body;
     if (password !== confirmPassword) {
-      return createCustomError(402, 'Passwords do not match', 'fail');
+      return createCustomError(402, 'Passwords do not match');
     }
     const user: IUser = await User.create(req.body);
 
