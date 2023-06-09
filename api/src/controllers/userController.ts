@@ -3,23 +3,13 @@ import User, { IUser } from '../models/userModel';
 import asyncWrapper from '../middleware/asyncWrapper';
 import AppError, { createCustomError } from '../error/appError';
 
-export const getAllUsers = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
+export const getAllUsers = asyncWrapper(
+  async (req: Request, res: Response, next: NextFunction) => {
     const users: IUser[] = await User.find();
 
     res.status(200).json({ status: 'success', users });
-  } catch (err) {
-    res.status(500).json({
-      status: 'fail',
-      message: 'Failed to get document',
-      error: err.message,
-    });
   }
-};
+);
 
 export const getUser = asyncWrapper(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -47,12 +37,8 @@ export const createUser = asyncWrapper(
   }
 );
 
-export const updateUser = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
+export const updateUser = asyncWrapper(
+  async (req: Request, res: Response, next: NextFunction) => {
     const id: string = req.params.userId;
     const user: IUser | null = await User.findByIdAndUpdate(id, req.body, {
       runValidators: true,
@@ -66,21 +52,11 @@ export const updateUser = async (
     }
 
     res.status(200).json({ status: 'success', user });
-  } catch (err) {
-    res.status(500).json({
-      status: 'fail',
-      message: 'Failed to create document',
-      error: err.message,
-    });
   }
-};
+);
 
-export const deleteUser = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
+export const deleteUser = asyncWrapper(
+  async (req: Request, res: Response, next: NextFunction) => {
     const id: string = req.params.userId;
     const user: IUser | null = await User.findByIdAndDelete(id);
 
@@ -92,11 +68,5 @@ export const deleteUser = async (
     }
 
     res.status(204);
-  } catch (err) {
-    res.status(500).json({
-      status: 'fail',
-      message: 'Failed to create document',
-      error: err.message,
-    });
   }
-};
+);

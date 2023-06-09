@@ -1,30 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
 import Board, { IBoard } from '../models/boardModel';
+import asyncWrapper from '../middleware/asyncWrapper';
 
-export const getAllBoards = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
+export const getAllBoards = asyncWrapper(
+  async (req: Request, res: Response, next: NextFunction) => {
     const boards: IBoard[] = await Board.find();
-
     res.status(200).json({ status: 'success', boards });
-  } catch (err) {
-    res.status(500).json({
-      status: 'fail',
-      message: 'Failed to get document',
-      error: err.message,
-    });
   }
-};
+);
 
-export const getBoard = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
+export const getBoard = asyncWrapper(
+  async (req: Request, res: Response, next: NextFunction) => {
     const id: string = req.params.boardId;
     const board: IBoard | null = await Board.findById(id);
 
@@ -36,21 +22,11 @@ export const getBoard = async (
     }
 
     res.status(200).json({ status: 'success', board });
-  } catch (err) {
-    res.status(500).json({
-      status: 'fail',
-      message: 'Failed to get document',
-      error: err.message,
-    });
   }
-};
+);
 
-export const createBoard = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
+export const createBoard = asyncWrapper(
+  async (req: Request, res: Response, next: NextFunction) => {
     const { name, userId } = req.body;
 
     if (!name || !userId) {
@@ -60,23 +36,12 @@ export const createBoard = async (
     }
 
     const board: IBoard = await Board.create(req.body);
-
     res.status(201).json({ status: 'success', board });
-  } catch (err) {
-    res.status(500).json({
-      status: 'fail',
-      message: 'Failed to create document',
-      error: err.message,
-    });
   }
-};
+);
 
-export const updateBoard = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
+export const updateBoard = asyncWrapper(
+  async (req: Request, res: Response, next: NextFunction) => {
     const id: string = req.params.boardId;
     const board: IBoard | null = await Board.findByIdAndUpdate(id, req.body, {
       runValidators: true,
@@ -90,21 +55,11 @@ export const updateBoard = async (
     }
 
     res.status(200).json({ status: 'success', board });
-  } catch (err) {
-    res.status(500).json({
-      status: 'fail',
-      message: 'Failed to create document',
-      error: err.message,
-    });
   }
-};
+);
 
-export const deleteBoard = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
+export const deleteBoard = asyncWrapper(
+  async (req: Request, res: Response, next: NextFunction) => {
     const id: string = req.params.boardId;
     const board: IBoard | null = await Board.findByIdAndDelete(id);
 
@@ -116,11 +71,5 @@ export const deleteBoard = async (
     }
 
     res.status(204);
-  } catch (err) {
-    res.status(500).json({
-      status: 'fail',
-      message: 'Failed to create document',
-      error: err.message,
-    });
   }
-};
+);
