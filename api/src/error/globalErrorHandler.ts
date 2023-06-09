@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
-import CustomError from './appError';
+import CustomError, { createCustomError } from './appError';
 
-// send more details about error in development
-const handleErrorInDev = (err: CustomError, res: Response) => {
+// Error handling for development environment
+const sendErrorDetailsInDev = (err: CustomError, res: Response) => {
   res.status(err.statusCode).json({
     status: err.status,
     error: err,
@@ -11,29 +11,41 @@ const handleErrorInDev = (err: CustomError, res: Response) => {
   });
 };
 
-// send less details about error in production
-const handleErrorInProd = (err: CustomError, res: Response) => {
-  // operational, trusted error: send message to client
+// Error handling for production environment
+const sendErrorDetailsInProd = (err: CustomError, res: Response) => {
   if (err.isOperational) {
     res.status(err.statusCode).json({
       status: err.status,
       message: err.message,
     });
-    // Programming or other unknown error: don't leak error details
   } else {
-    // 1. log error
     console.error('Error', err);
-
-    // 2. send generic message
     res.status(500).json({
       status: 'error',
-      message: 'Something went wrong'
+      message: 'Something went wrong',
     });
   }
 };
 
+const handleCastError = (err: any) => {
+  const message: string = `Invalid ${err.path}: ${err.value}`;
+  return createCustomError(400, message);
+};
+
+const handleDuplicateFields = (err: any) => {
+  const value = `${err.keyValue}`;
+  const message: string = `Duplicate field value ${value}, please use another value`;
+  return createCustomError(400, message);
+};
+
+// const handleValidationError = (err: any) => {
+//   const errors: string[] = Object.values(err.errors).map(el:any => el.message)
+//   const message: string = `Invalid input data. ${errors.join(', ')}`;
+//   return createCustomError(400, message);
+// };
+
 export const globalErrorHandler = (
-  err: CustomError,
+  err: any,
   req: Request,
   res: Response,
   next: NextFunction
@@ -42,9 +54,22 @@ export const globalErrorHandler = (
   err.status = err.status || 'error';
 
   if (process.env.NODE_ENV === 'development') {
-    handleErrorInDev(err, res);
+    sendErrorDetailsInDev(err, res);
   } else {
-    handleErrorInProd(err, res);
+    let error = { ...err };
+
+    if (error.name == 'CastError') {
+      error = handleCastError(error);
+    }
+
+    if (error.code === 11000) {
+      error = handleDuplicateFields(error);
+    }
+
+    // if (error.name === 'ValidationError') {
+    //   error = handleValidationError(error);
+    // }
+    sendErrorDetailsInProd(error, res);
   }
 };
 
