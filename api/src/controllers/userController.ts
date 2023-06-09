@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import User, { IUser } from '../models/userModel';
 import { asyncWrapper } from '../middleware/asyncWrapper';
-import AppError from '../utils/appError';
+import AppError, { createCustomError } from '../utils/appError';
 
 export const getAllUsers = async (
   req: Request,
@@ -21,39 +21,25 @@ export const getAllUsers = async (
   }
 };
 
-export const getUser = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
+export const getUser = asyncWrapper(
+  async (req: Request, res: Response, next: NextFunction) => {
     const id: string = req.params.userId;
     const user: IUser | null = await User.findById(id);
 
     // check if user exists
     if (!user) {
-      return res
-        .status(404)
-        .json({ status: 'fail', message: 'User not found' });
+      return createCustomError(404, 'User not found', 'fail');
     }
 
     res.status(200).json({ status: 'success', user });
-  } catch (err) {
-    res.status(500).json({
-      status: 'fail',
-      message: 'Failed to get document',
-      error: err.message,
-    });
   }
-};
+);
 
 export const createUser = asyncWrapper(
   async (req: Request, res: Response, next: NextFunction) => {
     const { password, confirmPassword } = req.body;
     if (password !== confirmPassword) {
-      return res
-        .status(400)
-        .json({ status: 'fail', message: 'Passwords do not match!' });
+      return createCustomError(402, 'Passwords do not match', 'fail');
     }
     const user: IUser = await User.create(req.body);
 

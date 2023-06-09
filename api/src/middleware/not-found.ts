@@ -1,7 +1,9 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
+import { createCustomError } from '../utils/appError';
 
-const notFound = (req: Request, res: Response) => {
-  return res.status(404).send('Route does not exist');
+const notFound = (req: Request, res: Response, next: NextFunction) => {
+  const msg: string = `Can't find ${req.originalUrl} on this server`;
+  return next(createCustomError(404, msg, 'fail'));
 };
 
 export default notFound;
