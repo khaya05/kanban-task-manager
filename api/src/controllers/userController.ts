@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import User, { IUser } from '../models/userModel';
 import { asyncWrapper } from '../middleware/asyncWrapper';
-import AppError, { createCustomError } from '../utils/appError';
+import AppError, { createCustomError } from '../error/appError';
 
 export const getAllUsers = async (
   req: Request,

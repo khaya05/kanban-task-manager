@@ -5,7 +5,7 @@ import compression from 'compression';
 import cors from 'cors';
 import morgan from 'morgan';
 import notFound from './middleware/not-found';
-import errorHandlerMiddleware from './middleware/error-handler';
+import errorHandlerMiddleware from './error/error-handler';
 
 // Routes
 import userRouter from './routes/userRouter';
