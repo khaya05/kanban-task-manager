@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import Board, { IBoard } from '../models/boardModel';
 import asyncWrapper from '../middleware/asyncWrapper';
+import { createCustomError } from '../error/appError';
 
 export const getAllBoards = asyncWrapper(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -16,9 +17,7 @@ export const getBoard = asyncWrapper(
 
     // check if user exists
     if (!board) {
-      return res
-        .status(404)
-        .json({ status: 'fail', message: 'User not found' });
+      return createCustomError(404, 'Board not found');
     }
 
     res.status(200).json({ status: 'success', board });
@@ -30,9 +29,7 @@ export const createBoard = asyncWrapper(
     const { name, userId } = req.body;
 
     if (!name || !userId) {
-      return res
-        .status(400)
-        .json({ status: 'fail', message: 'User name and Id cannot be empty' });
+      return createCustomError(404, 'Board name or password cannot');
     }
 
     const board: IBoard = await Board.create(req.body);
@@ -49,9 +46,7 @@ export const updateBoard = asyncWrapper(
 
     // check if user exists
     if (!board) {
-      return res
-        .status(404)
-        .json({ status: 'fail', message: 'User not found' });
+      return createCustomError(404, 'Board not found');
     }
 
     res.status(200).json({ status: 'success', board });
@@ -65,9 +60,7 @@ export const deleteBoard = asyncWrapper(
 
     // check if user exists
     if (!board) {
-      return res
-        .status(404)
-        .json({ status: 'fail', message: 'User not found' });
+      return createCustomError(404, 'Board not found');
     }
 
     res.status(204);

@@ -1,7 +1,7 @@
 class CustomError extends Error {
   statusCode: number;
   status: string;
-  isOperational: boolean
+  isOperational: boolean;
 
   constructor(statusCode: number, message: string) {
     super(message);
@@ -14,7 +14,7 @@ class CustomError extends Error {
 
 export const createCustomError = (
   statusCode: number,
-  msg: string,
+  msg: string
 ): CustomError => {
   return new CustomError(statusCode, msg);
 };

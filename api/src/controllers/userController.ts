@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import User, { IUser } from '../models/userModel';
 import asyncWrapper from '../middleware/asyncWrapper';
-import AppError, { createCustomError } from '../error/appError';
+import { createCustomError } from '../error/appError';
 
 export const getAllUsers = asyncWrapper(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -40,15 +40,15 @@ export const createUser = asyncWrapper(
 export const updateUser = asyncWrapper(
   async (req: Request, res: Response, next: NextFunction) => {
     const id: string = req.params.userId;
+
+    debugger
     const user: IUser | null = await User.findByIdAndUpdate(id, req.body, {
       runValidators: true,
     });
 
     // check if user exists
     if (!user) {
-      return res
-        .status(404)
-        .json({ status: 'fail', message: 'User not found' });
+      return createCustomError(404, 'User not found');
     }
 
     res.status(200).json({ status: 'success', user });
@@ -61,10 +61,8 @@ export const deleteUser = asyncWrapper(
     const user: IUser | null = await User.findByIdAndDelete(id);
 
     // check if user exists
-    if (!user) {
-      return res
-        .status(404)
-        .json({ status: 'fail', message: 'User not found' });
+    if (user === null) {
+      return createCustomError(404, 'User not found');
     }
 
     res.status(204);
