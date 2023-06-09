@@ -5,9 +5,7 @@ import compression from 'compression';
 import cors from 'cors';
 import morgan from 'morgan';
 import notFound from './middleware/not-found';
-import errorHandlerMiddleware from './error/error-handler';
-import { createCustomError } from './error/appError';
-import { globalErrorHandler } from './error';
+import globalErrorHandler from './error/globalErrorHandler';
 
 // Routes
 import userRouter from './routes/userRouter';
@@ -26,17 +24,6 @@ app.use('/api/v1/users', userRouter);
 app.use('/api/v1/boards', boardRouter);
 
 // error handling
-// app.all('*', notFound);
-// app.use(notFound);
-// app.use(errorHandlerMiddleware)
-
 app.all('*', notFound);
-
 app.use(globalErrorHandler);
-
-// app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-//   err.statusCode = err.statusCode || 500;
-//   :
-// })
-
 export default app;

@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 
-export const asyncWrapper =
-  <T>(fn: (req: Request, res: Response, next: NextFunction) => Promise<T>) =>
-  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-      await fn(req, res, next);
-    } catch (err) {
-      next(err);
-    }
+const asyncWrapper = (
+  fn: (req: Request, res: Response, next: NextFunction) => Promise<any>
+) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    fn(req, res, next).catch(next);
   };
+};
+
+export default asyncWrapper;
