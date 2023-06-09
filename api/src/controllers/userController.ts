@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import User, { IUser } from '../models/userModel';
 import asyncWrapper from '../middleware/asyncWrapper';
 import { createCustomError } from '../error/appError';
+import { deleteOne } from './globalCrudController';
 
 export const getAllUsers = asyncWrapper(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -55,16 +56,4 @@ export const updateUser = asyncWrapper(
   }
 );
 
-export const deleteUser = asyncWrapper(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const id: string = req.params.userId;
-    const user: IUser | null = await User.findByIdAndDelete(id);
-
-    // check if user exists
-    if (user === null) {
-      return createCustomError(404, 'User not found');
-    }
-
-    res.status(204);
-  }
-);
+export const deleteUser = deleteOne(User)
