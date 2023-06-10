@@ -4,7 +4,7 @@ import { IUser } from './userModel';
 
 export interface IBoard extends Document {
   name: string;
-  userId: IUser['_id'];
+  user: IUser['_id'];
 }
 
 const boardSchema: Schema = new Schema({
@@ -14,7 +14,7 @@ const boardSchema: Schema = new Schema({
     unique: true,
     default: 'untitled-board',
   },
-  userId: {
+  user: {
     type: Schema.Types.ObjectId,
     required: [true, 'A board must belong to a user'],
     ref: 'User',
@@ -24,8 +24,8 @@ const boardSchema: Schema = new Schema({
 // Pre-middleware to populate the user field and select only necessary fields
 boardSchema.pre<IBoard>(/^find/, function (next: NextFunction) {
   this.populate({
-    path: 'userId',
-    select: 'name email',
+    path: 'user',
+    select: 'name -email',
   });
   next();
 });

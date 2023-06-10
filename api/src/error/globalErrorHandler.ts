@@ -71,6 +71,7 @@ export const globalErrorHandler = (
     // }
     sendErrorDetailsInProd(error, res);
   }
+  next()
 };
 
 export default globalErrorHandler;

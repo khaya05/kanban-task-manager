@@ -1,8 +1,9 @@
+import { NextFunction } from 'express';
 import mongoose, { Document, Schema } from 'mongoose';
 
 export interface IColumn extends Document {
   name: string;
-  columnId: Schema.Types.ObjectId;
+  boardId: Schema.Types.ObjectId;
 }
 
 const columnSchema: Schema = new Schema({
@@ -18,4 +19,13 @@ const columnSchema: Schema = new Schema({
   },
 });
 
-export default mongoose.model<IColumn>('Column', columnSchema)
+// populate board
+columnSchema.pre<IColumn>(/^find/, function (next: NextFunction) {
+  this.populate({
+    path: 'boardId',
+    select: 'name -userId'
+  });
+  next()
+});
+
+export default mongoose.model<IColumn>('Column', columnSchema);

@@ -3,7 +3,6 @@ import mongoose, { Document, Schema } from 'mongoose';
 export interface ISubTask extends Document {
   title: string;
   isCompleted: boolean;
-  taskId: Schema.Types.ObjectId;
 }
 
 const SubTaskSchema: Schema = new Schema({
@@ -14,12 +13,6 @@ const SubTaskSchema: Schema = new Schema({
   isCompleted: {
     type: Boolean,
     default: false,
-  },
-
-  taskId: {
-    type: Schema.Types.ObjectId,
-    required: [true, 'A subtask must belong to a task'],
-    ref: 'Task',
   },
 });
 
