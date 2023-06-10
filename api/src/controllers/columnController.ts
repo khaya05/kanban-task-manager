@@ -8,7 +8,7 @@ import {
 } from './globalCrudController';
 
 export const getAllColumns= getAllDocs(Column);
-export const getColumns = getOne(Column);
-export const createColumns = createOne(Column);
-export const updateColumns = updateOne(Column);
-export const deleteColumns = deleteOne(Column);
+export const getColumn = getOne(Column);
+export const createColumn = createOne(Column);
+export const updateColumn = updateOne(Column);
+export const deleteColumn = deleteOne(Column);

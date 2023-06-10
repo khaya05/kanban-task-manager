@@ -8,7 +8,7 @@ import {
 } from './globalCrudController';
 
 export const getAllSubtasks = getAllDocs(Subtask);
-export const getSubtasks = getOne(Subtask);
-export const createSubtasks = createOne(Subtask);
-export const updateSubtasks = updateOne(Subtask);
-export const deleteSubtasks = deleteOne(Subtask);
+export const getSubtask = getOne(Subtask);
+export const createSubtask = createOne(Subtask);
+export const updateSubtask = updateOne(Subtask);
+export const deleteSubtask = deleteOne(Subtask);
