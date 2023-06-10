@@ -10,6 +10,9 @@ import globalErrorHandler from './error/globalErrorHandler';
 // Routes
 import userRouter from './routes/userRouter';
 import boardRouter from './routes/boardRouter';
+import taskRouter from './routes/taskRouter';
+import subtaskRouter from './routes/subtaskRouter';
+import columnRouter from './routes/columnRouter';
 
 const app = express();
 
@@ -22,6 +25,9 @@ app.use(bodyParser.json());
 // Routes
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/boards', boardRouter);
+app.use('/api/v1/columns', columnRouter);
+app.use('/api/v1/tasks', taskRouter);
+app.use('/api/v1/subtasks', subtaskRouter);
 
 // error handling
 app.all('*', notFound);

@@ -11,10 +11,10 @@ const columnSchema: Schema = new Schema({
     required: [true, 'A column must have a name'],
     unique: true,
   },
-  columnId: {
+  boardId: {
     type: Schema.Types.ObjectId,
     required: [true, 'A column must belong to a board'],
-    ref: 'User',
+    ref: 'Board',
   },
 });
 
