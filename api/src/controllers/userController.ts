@@ -1,59 +1,14 @@
-import { Request, Response, NextFunction } from 'express';
-import User, { IUser } from '../models/userModel';
-import asyncWrapper from '../middleware/asyncWrapper';
-import { createCustomError } from '../error/appError';
-import { deleteOne } from './globalCrudController';
+import User from '../models/userModel';
+import {
+  createOne,
+  deleteOne,
+  getAllDocs,
+  getOne,
+  updateOne,
+} from './globalCrudController';
 
-export const getAllUsers = asyncWrapper(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const users: IUser[] = await User.find();
-
-    res.status(200).json({ status: 'success', users });
-  }
-);
-
-export const getUser = asyncWrapper(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const id: string = req.params.userId;
-    const user: IUser | null = await User.findById(id);
-
-    // check if user exists
-    if (!user) {
-      return createCustomError(404, 'User not found');
-    }
-
-    res.status(200).json({ status: 'success', user });
-  }
-);
-
-export const createUser = asyncWrapper(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const { password, confirmPassword } = req.body;
-    if (password !== confirmPassword) {
-      return createCustomError(402, 'Passwords do not match');
-    }
-    const user: IUser = await User.create(req.body);
-
-    res.status(201).json({ status: 'success', user });
-  }
-);
-
-export const updateUser = asyncWrapper(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const id: string = req.params.userId;
-
-    debugger
-    const user: IUser | null = await User.findByIdAndUpdate(id, req.body, {
-      runValidators: true,
-    });
-
-    // check if user exists
-    if (!user) {
-      return createCustomError(404, 'User not found');
-    }
-
-    res.status(200).json({ status: 'success', user });
-  }
-);
-
-export const deleteUser = deleteOne(User)
+export const getAllUsers = getAllDocs(User);
+export const getUser = getOne(User);
+export const createUser = createOne(User);
+export const updateUser = updateOne(User);
+export const deleteUser = deleteOne(User);
